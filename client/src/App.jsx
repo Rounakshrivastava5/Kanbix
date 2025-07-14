@@ -21,10 +21,23 @@ import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
 const App = () => {
+  const navigate = useNavigate();
+  // Define your menu items with route paths
+  // Define your menu items with route paths
+  const menuItems = [
+    { text: 'Home', icon: <DashboardIcon />, path: '/' },
+    { text: 'Kanban Board', icon: <ViewKanbanIcon />, path: '/kanban' },
+    { text: 'Projects', icon: <WorkspacesIcon />, path: '/projects' },
+    { text: 'Teams', icon: <GroupIcon />, path: '/teams' },
+    { text: 'Logout', icon: <LogoutIcon />, path: '/logout' }, // implement logout logic as needed
+  ];
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -55,7 +68,7 @@ const App = () => {
       >
         <Toolbar sx={{ zIndex: 2 }}>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            🧠 GoTeamFlow
+            🧠 Kanbix
           </Typography>
           <IconButton color="inherit">
             <Avatar alt="User" src="/avatar.png" />
@@ -78,22 +91,20 @@ const App = () => {
         }}
       >
         <Toolbar />
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
-            {[ 
-              { text: 'Dashboard', icon: <DashboardIcon /> },
-              { text: 'Kanban Board', icon: <ViewKanbanIcon /> },
-              { text: 'Projects', icon: <WorkspacesIcon /> },
-              { text: 'Teams', icon: <GroupIcon /> },
-              { text: 'Logout', icon: <LogoutIcon /> },
-            ].map(({ text, icon }) => (
-              <ListItem button key={text}>
-                <ListItemIcon sx={{ color: '#fff' }}>{icon}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+<Box sx={{ overflow: 'auto' }}>
+  <List>
+    {menuItems.map(({ text, icon, path }) => (
+      <ListItem
+        button
+        key={text}
+        onClick={() => navigate(path)}
+      >
+        <ListItemIcon sx={{ color: '#fff' }}>{icon}</ListItemIcon>
+        <ListItemText primary={text} />
+      </ListItem>
+    ))}
+  </List>
+</Box>
       </Drawer>
 
       {/* Main Content */}
