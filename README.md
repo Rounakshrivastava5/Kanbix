@@ -1,6 +1,6 @@
-# GoTeamFlow
+# Kanbix [In Progress]
 
-GoTeamFlow is a modern, real-time Kanban board application for agile teams. It features collaborative task management, drag-and-drop boards, real-time updates via WebSockets, and a beautiful UI built with React, Tailwind CSS, and Material UI.
+Kanbix is a modern, real-time Kanban board application for agile teams. It features collaborative task management, drag-and-drop boards, real-time updates via WebSockets, and a beautiful UI built with React, Tailwind CSS, and Material UI.
 
 ## Features
 - 📝 Create, update, and manage tasks in real time
