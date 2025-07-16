@@ -2,6 +2,16 @@
 
 Kanbix is a modern, real-time Kanban board application for agile teams. It features collaborative task management, drag-and-drop boards, real-time updates via WebSockets, and a beautiful UI built with React, Tailwind CSS, and Material UI.
 
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/c20c5e73-01e6-43fa-bd48-33b9212fbfa7" />
+
+
+
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/05e6410b-6971-4922-b72f-b552c759c689" />
+
+
+
 ## Features
 - 📝 Create, update, and manage tasks in real time
 - 🏷️ Drag-and-drop Kanban board (To Do, In Progress, Done)
