@@ -27,6 +27,7 @@ import {
 } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AddIcon from '@mui/icons-material/Add';
+import logoImage from '../assets/Kanbix-logo.png';
 
 const COLUMNS = ['todo', 'in-progress', 'done'];
 const COLUMN_LABELS = {
@@ -149,12 +150,19 @@ const KanbanBoard = () => {
     <Box sx={{ bgcolor: '#0f0f0f', minHeight: '100vh',  px: { xs: 1, sm: 3 }, p: 4, overflowX: 'auto' }}>
       <Box display="flex" justifyContent="center" alignItems="center" mb={4}>
         <Typography variant="h4" sx={{ color: '#ffffff' }}>
-          🚀 Kanbix
+          
         </Typography>
       </Box>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Grid container spacing={2}>
+        <Box display="flex" justifyContent="center">
+        <Grid container spacing={2}
+              sx={{
+        maxWidth: '1200px',
+        width: '100%',
+        mx: 'auto',
+      }}
+>
           {COLUMNS.map((col) => (
             <Grid item xs={12} sm={6} md={4} key={col}>
               <Droppable droppableId={col}>
@@ -166,7 +174,7 @@ const KanbanBoard = () => {
                     sx={{
                       bgcolor: snapshot.isDraggingOver ? '#2c2c2c' : '#1e1e1e',
                       p: 2,
-                      minHeight: '500px',
+                      
                       borderRadius: 2,
                       color: '#fff',
                       display: 'flex',
@@ -233,9 +241,14 @@ const KanbanBoard = () => {
                                 {task.description}
                               </Typography>
 
+                              <Typography variant="body2" color="#bbb" mb={1}>
+                                {task.assignedTo?.name}
+                              </Typography>
+
+
                               <Box display="flex" justifyContent="space-between" alignItems="center">
                                 <AvatarGroup max={3}>
-                                  {task.assignees?.map((user) => (
+                                  {task.assigned?.map((user) => (
                                     <Avatar
                                       key={user._id}
                                       alt={user.name}
@@ -266,6 +279,7 @@ const KanbanBoard = () => {
             </Grid>
           ))}
         </Grid>
+        </Box>
       </DragDropContext>
 
       {/* Task Creation Modal */}

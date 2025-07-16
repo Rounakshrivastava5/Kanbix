@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import KanbanBoard from './components/KanbanBoard';
 import SilkBackground from "./components/background/Silk";
+import Iridescence from "./components/background/iri";
+import Aurora  from "./components/background/dot-grid";
 import {
   AppBar,
   Avatar,
@@ -14,115 +16,198 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  useMediaQuery,
+  Divider,
+  Tooltip,
 } from '@mui/material';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useNavigate } from 'react-router-dom';
+
+import { useNavigate, useLocation } from 'react-router-dom';
+import logoImage from './assets/Kanbix-grey.png';
 
 
 const drawerWidth = 240;
+const collapsedWidth = 70;
 
 const App = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isMobile = useMediaQuery('(max-width:600px)');
   const navigate = useNavigate();
-  // Define your menu items with route paths
-  // Define your menu items with route paths
+  const location = useLocation();
+
+  const toggleMobileDrawer = () => setMobileOpen(!mobileOpen);
+  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
+
   const menuItems = [
     { text: 'Home', icon: <DashboardIcon />, path: '/' },
     { text: 'Kanban Board', icon: <ViewKanbanIcon />, path: '/kanban' },
     { text: 'Projects', icon: <WorkspacesIcon />, path: '/projects' },
     { text: 'Teams', icon: <GroupIcon />, path: '/teams' },
-    { text: 'Logout', icon: <LogoutIcon />, path: '/logout' }, // implement logout logic as needed
+    { text: 'Logout', icon: <LogoutIcon />, path: '/logout' },
   ];
+
+  const drawer = (
+    <Box
+      sx={{
+        width: isCollapsed ? collapsedWidth : drawerWidth,
+        height: '100%',
+        bgcolor: '#1e1e1e',
+        color: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Box>
+        <Toolbar sx={{ justifyContent: isCollapsed ? 'center' : 'space-between', px: 2 }}>
+          {!isCollapsed && <Typography variant="h6">          <img src={logoImage} alt="Kanbix Logo" style={{ height: 40 }} />
+          </Typography>}
+          {isMobile && (
+            <IconButton onClick={toggleMobileDrawer} sx={{ color: '#fff' }}>
+              <CloseIcon />
+            </IconButton>
+          )}
+        </Toolbar>
+
+        <List>
+          {menuItems.map(({ text, icon, path }) => (
+            <Tooltip title={isCollapsed ? text : ''} placement="right" key={text}>
+              <ListItem
+                button
+                onClick={() => {
+                  navigate(path);
+                  if (isMobile) toggleMobileDrawer();
+                }}
+                selected={location.pathname === path}
+                sx={{
+                  '&.Mui-selected': { bgcolor: '#333' },
+                  '&:hover': { bgcolor: '#333' },
+                  px: isCollapsed ? 2 : 3,
+                }}
+              >
+                <ListItemIcon sx={{ color: '#fff', minWidth: 0, mr: isCollapsed ? 'auto' : 2 }}>
+                  {icon}
+                </ListItemIcon>
+                {!isCollapsed && <ListItemText primary={text} />}
+              </ListItem>
+            </Tooltip>
+          ))}
+        </List>
+      </Box>
+
+      {/* Collapse Button (Only on Desktop) */}
+      {!isMobile && (
+        <Box sx={{ textAlign: 'center', py: 1 }}>
+          <IconButton onClick={toggleCollapse} sx={{ color: '#fff' }}>
+            {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </Box>
+      )}
+    </Box>
+  );
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
-      {/* Top Silk Background */}
+      {/* Silk Background */}
       <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: drawerWidth,
-          right: 0,
-          height: 200,
-          zIndex: 0,
-        }}
+  sx={{
+    position: 'absolute',
+    top: 0,
+    left: isMobile ? 0 : (isCollapsed ? `${collapsedWidth}px` : `${drawerWidth}px`),
+    width: isMobile
+      ? '100%'
+      : `calc(100% - ${isCollapsed ? collapsedWidth : drawerWidth}px)`,
+    height: 200,
+    zIndex: 0,
+    transition: 'left 0.3s ease, width 0.3s ease',
+  }}
       >
-        <SilkBackground color="#4b8bbe" speed={5} noiseIntensity={1.5} />
-      </Box>
 
-      {/* Top Bar */}
+        <Box>
+          <Aurora
+  colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+  blend={0.5}
+  amplitude={1.0}
+  speed={0.5}
+/> 
+        </Box>
+     </Box>
+
+      {/* Top AppBar */}
       <AppBar
         position="fixed"
         sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 2,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
           bgcolor: 'transparent',
-          backgroundImage: 'none',
           boxShadow: 'none',
         }}
       >
-        <Toolbar sx={{ zIndex: 2 }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            🧠 Kanbix
+        <Toolbar>
+          {isMobile && (
+            <IconButton edge="start" onClick={toggleMobileDrawer} sx={{ mr: 2, color: '#fff' }}>
+              <MenuIcon />
+            </IconButton>
+          )}
+          <Typography variant="h6" sx={{ flexGrow: 1, mt: 2 }}>
+            
           </Typography>
           <IconButton color="inherit">
-            <Avatar alt="User" src="/avatar.png" />
+            <Avatar alt="Rounak Shrivastava" src="/avatar.png" />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Sidebar Drawer */}
+      {/* Drawer: Desktop vs Mobile */}
       <Drawer
-        variant="permanent"
+        variant={isMobile ? 'temporary' : 'persistent'}
+        open={isMobile ? mobileOpen : true}
+        onClose={toggleMobileDrawer}
         sx={{
-          width: drawerWidth,
+          width: isCollapsed ? collapsedWidth : drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
+            width: isCollapsed ? collapsedWidth : drawerWidth,
             boxSizing: 'border-box',
+            overflowX: 'hidden',
+            transition: 'width 0.3s ease',
             bgcolor: '#1e1e1e',
-            color: '#fff',
           },
         }}
       >
-        <Toolbar />
-<Box sx={{ overflow: 'auto' }}>
-  <List>
-    {menuItems.map(({ text, icon, path }) => (
-      <ListItem
-        button
-        key={text}
-        onClick={() => navigate(path)}
-      >
-        <ListItemIcon sx={{ color: '#fff' }}>{icon}</ListItemIcon>
-        <ListItemText primary={text} />
-      </ListItem>
-    ))}
-  </List>
-</Box>
+        {drawer}
       </Drawer>
+      
 
       {/* Main Content */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          bgcolor: '#0f0f0f',
           minHeight: '100vh',
           p: 3,
-          ml: `${drawerWidth}px`,
-          mt: 8, // spacing under AppBar
-          position: 'relative',
-          zIndex: 1,
+          mt: 8,
+          bgcolor: '#0f0f0f',
+          ml: isMobile ? 0 : (isCollapsed ? `${collapsedWidth}px` : `${drawerWidth}px`),
+          transition: 'margin 0.3s ease',
         }}
       >
         <KanbanBoard />
+        
       </Box>
+      
     </Box>
   );
 };
