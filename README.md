@@ -4,12 +4,11 @@ Kanbix is a modern, real-time Kanban board application for agile teams. It featu
 
 <img width="1919" height="955" alt="image" src="https://github.com/user-attachments/assets/7108299b-343b-49db-863e-366b29105170" />
 
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/c20c5e73-01e6-43fa-bd48-33b9212fbfa7" />
+<img width="1919" height="953" alt="image" src="https://github.com/user-attachments/assets/b9720ea4-5214-4c5d-a48d-9fe63bf052c8" />
+<img width="1919" height="954" alt="image" src="https://github.com/user-attachments/assets/45ab3026-6083-4704-8576-203889c725e1" />
+<img width="1919" height="947" alt="image" src="https://github.com/user-attachments/assets/5b9d0071-5cba-40b5-88f5-e78e596662da" />
 
 
-
-
-<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/05e6410b-6971-4922-b72f-b552c759c689" />
 
 
 
