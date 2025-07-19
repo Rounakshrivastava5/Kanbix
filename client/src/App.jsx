@@ -50,11 +50,12 @@ const App = () => {
   const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 
   const menuItems = [
-    { text: 'Home', icon: <DashboardIcon />, path: '/' },
+    { text: 'Signup', path: '/' },
+    { text: 'Home', icon: <DashboardIcon />, path: '/dashboard' },
     { text: 'Kanban Board', icon: <ViewKanbanIcon />, path: '/kanban' },
     { text: 'Projects', icon: <WorkspacesIcon />, path: '/projects' },
     { text: 'Teams', icon: <GroupIcon />, path: '/teams' },
-    { text: 'Logout', icon: <LogoutIcon />, path: '/logout' },
+    { text: 'Logout', icon: <LogoutIcon />, path: '/' },
   ];
 
   const drawer = (
@@ -108,7 +109,7 @@ const App = () => {
 
       {/* Collapse Button (Only on Desktop) */}
       {!isMobile && (
-        <Box sx={{ textAlign: 'center', py: 1 }}>
+        <Box sx={{ py: 1, display: 'flex', justifyContent: isCollapsed ? 'center' : 'flex-end' }}>
           <IconButton onClick={toggleCollapse} sx={{ color: '#fff' }}>
             {isCollapsed ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -121,30 +122,25 @@ const App = () => {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
-      {/* Silk Background */}
+      {/* Aurora Background */}
       <Box
-  sx={{
-    position: 'absolute',
-    top: 0,
-    left: isMobile ? 0 : (isCollapsed ? `${collapsedWidth}px` : `${drawerWidth}px`),
-    width: isMobile
-      ? '100%'
-      : `calc(100% - ${isCollapsed ? collapsedWidth : drawerWidth}px)`,
-    height: 200,
-    zIndex: 0,
-    transition: 'left 0.3s ease, width 0.3s ease',
-  }}
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: isMobile ? 0 : (isCollapsed ? `${collapsedWidth}px` : `${drawerWidth}px`),
+          right: 0,
+          height: 200,
+          zIndex: 0,
+          transition: 'left 0.3s ease',
+        }}
       >
-
-        <Box>
-          <Aurora
-  colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
-  blend={0.5}
-  amplitude={1.0}
-  speed={0.5}
-/> 
-        </Box>
-     </Box>
+        <Aurora
+          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+          blend={0.5}
+          amplitude={1.0}
+          speed={0.5}
+        />
+      </Box>
 
       {/* Top AppBar */}
       <AppBar

@@ -6,7 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import theme from './theme';
 import App from './App'; // Kanban + layout
-import LandingPage from './pages/LandingPage'; // Create this if not yet
+import AuthPage from './pages/authPage';
+import LandingPage from './pages/LandingPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -14,7 +15,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<AuthPage />} />
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/dashboard" element={<App />} />
         </Routes>
       </BrowserRouter>
